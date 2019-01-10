@@ -34,7 +34,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      todoList: toDo,
+      todoList: [],
       task: '',
       id: '',
       completed: false,
@@ -46,15 +46,27 @@ class App extends React.Component {
     this.setState({ inputText: event.target.value });
   };
 
+  addToList = event => {
+    event.preventDefault();
+    this.setState({
+      todoList: [
+        ...this.state.todoList, {task: this.state.inputText, id: Date.now(), completed: false}
+      ],
+      inputText: 'HELOO DUMB STUPID APP'
+    })
+    console.log('it works')
+  };
+
 
 
   render() {
     return (
       <div>
-        <h2>Welcome to your ToDo BULLSHIT App!</h2>
+        <h2>Welcome to your ToDo List App!</h2>
         
-        <TodoForm inputText={this.state.inputText} changes={this.changes}/>
         <TodoList todoList={this.state.todoList} task={this.state.task}/>
+        <TodoForm inputText={this.state.inputText} changes={this.changes} addToList={this.addToList}/>
+        
 
 
       </div>
