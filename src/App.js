@@ -16,15 +16,10 @@ const toDo = [
     },
     {
       task: 'New Made Up Stuff',
-      id: 6546584684682,
+      id: 6546584684111,
       completed: false
       }
-
-
 ]
-
-
-
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -34,7 +29,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      todoList: [],
+      todoList: toDo,
       task: '',
       id: '',
       completed: false,
@@ -52,19 +47,40 @@ class App extends React.Component {
       todoList: [
         ...this.state.todoList, {task: this.state.inputText, id: Date.now(), completed: false}
       ],
-      inputText: 'HELOO DUMB STUPID APP'
+      inputText: ''
     })
     console.log('it works')
   };
 
+  changeComplete = id => {
+    this.setState({
+      todoList: this.state.todoList.map(todo => {
+        if (todo.id === id ) {
+          todo.completed = !todo.completed
+          return todo;
+        } 
+        else {
+          return todo;
+        }
+      })
+    });
+  };
 
+  clearedStuff = ev => {
+    ev.preventDefault();
+    this.setState({
+      todoList: this.state.id.filter(
+        todoList => todoList.completed === true
+      )
+    });
+  };
 
   render() {
     return (
       <div>
         <h2>Welcome to your ToDo List App!</h2>
         
-        <TodoList todoList={this.state.todoList} task={this.state.task}/>
+        <TodoList todoList={this.state.todoList}  changeComplete={this.changeComplete}/>
         <TodoForm inputText={this.state.inputText} changes={this.changes} addToList={this.addToList}/>
         
 
